@@ -14,6 +14,11 @@
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 
+BOOL CALLBACK DestroyChildProc(HWND hwndChild, LPARAM lParam) {
+    DestroyWindow(hwndChild);
+    return TRUE;
+}
+
 App_State* current_state;
 App_State* next_state;
 
@@ -69,6 +74,10 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 
     current_state = new Main_Menu(&next_state);
 
+    //This way, we make each new state act as if the window was just created (so we can potentially run WM_CREATE inside App_State::winproc)
+    CREATESTRUCT cs = {};
+    SendMessage(hwnd, WM_CREATE, 0, (LPARAM)&cs);
+
     while (true) {
         if (PeekMessage(&messages, NULL, 0, 0, PM_REMOVE)) {
             if (messages.message == WM_QUIT) {
@@ -80,9 +89,11 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
         if (current_state)
             current_state->run(hwnd);
         if (next_state) {
+            EnumChildWindows(hwnd, DestroyChildProc, 0); //in case there are child windows such as buttons, destroy them
             delete current_state;
             current_state = next_state;
             next_state = nullptr;
+            SendMessage(hwnd, WM_CREATE, 0, (LPARAM)&cs);
             InvalidateRect(hwnd, 0, 1);
         }
     }
