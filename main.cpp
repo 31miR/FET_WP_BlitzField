@@ -6,9 +6,16 @@
 
 #include <tchar.h>
 #include <windows.h>
+#include <iostream>
+
+#include "App_State.h"
+#include "Main_Menu.h"
 
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
+
+App_State* current_state;
+App_State* next_state;
 
 /*  Make the class name into a global variable  */
 TCHAR szClassName[ ] = _T("CodeBlocksWindowsApp");
@@ -39,7 +46,6 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     /* Use Windows's default colour as the background of the window */
     wincl.hbrBackground = (HBRUSH) COLOR_BACKGROUND;
 
-    /* Register the window class, and if it fails quit the program */
     if (!RegisterClassEx (&wincl))
         return 0;
 
@@ -59,35 +65,41 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
            NULL                 /* No Window Creation data */
            );
 
-    /* Make the window visible on the screen */
     ShowWindow (hwnd, nCmdShow);
 
-    /* Run the message loop. It will run until GetMessage() returns 0 */
-    while (GetMessage (&messages, NULL, 0, 0))
-    {
-        /* Translate virtual-key messages into character messages */
-        TranslateMessage(&messages);
-        /* Send message to WindowProcedure */
-        DispatchMessage(&messages);
+    current_state = new Main_Menu(&next_state);
+
+    while (true) {
+        if (PeekMessage(&messages, NULL, 0, 0, PM_REMOVE)) {
+            if (messages.message == WM_QUIT) {
+                break;
+            }
+            TranslateMessage(&messages);
+            DispatchMessage(&messages);
+        }
+        if (current_state)
+            current_state->run(hwnd);
+        if (next_state) {
+            delete current_state;
+            current_state = next_state;
+            next_state = nullptr;
+            InvalidateRect(hwnd, 0, 1);
+        }
     }
 
-    /* The program return-value is 0 - The value that PostQuitMessage() gave */
     return messages.wParam;
 }
 
-
-/*  This function is called by the Windows function DispatchMessage()  */
-
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)                  /* handle the messages */
-    {
-        case WM_DESTROY:
-            PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
-            break;
-        default:                      /* for messages that we don't deal with */
-            return DefWindowProc (hwnd, message, wParam, lParam);
+    if (message == WM_DESTROY) {
+        delete current_state;
+        current_state = nullptr;
+        PostQuitMessage(0);
+        return 0;
     }
+    if (current_state)
+        return current_state->winproc(hwnd, message, wParam, lParam);
 
-    return 0;
+    return DefWindowProc (hwnd, message, wParam, lParam);
 }
