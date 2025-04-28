@@ -8,7 +8,9 @@ finish all of them in about 15 minutes.\
 To control your character:
 - W/A/S/D - move top/left/down/right
 - SPACE - slash
-- LEFT MOUSE CLICK - dash to cursor (or as close as possible).\
+- LEFT MOUSE CLICK - dash to cursor (or as close as possible).
+
+
 Every level you finish for the first time gives you a point that you can use to level up your character.
 
 # What's in this repository
