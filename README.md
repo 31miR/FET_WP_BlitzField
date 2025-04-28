@@ -25,3 +25,6 @@ The project code, that was written with a colleague, was not inside the git repo
 Currently, the easiest way to build the project is by using some IDE. Codeblocks project file (.cbp) has been added to the repo so if you have codeblocks you can compile from there.
 However, you do need a database (game_data.db) and resources/ in order for the app to work properly.\
 game_data.db is already provided but you cannot clear it as the delete option for profiles is not implemented in the game. Hence, if you wish to reset the scores, you will need to paste a new game_data.db over the original. You can find the clean .db file inside the clean_db_file directory.
+
+# I want to write my own levels, can I do that?
+Yes, however, you will have to modify some code. For instance, the game is hard coded for 4 levels. You will have to edit that. Also each level is hard coded to look for the song and map that is named [LEVEL_NUMBER].bmp or something like that. If you are willing to do that, you can. If you wish to try that, there is a tool I've made for this game that can generate a file that contains coordinates of the walls and other objects, as well as path for enemies. Check that out here: https://github.com/31miR/FET_WP_BlitzField_map_editor
