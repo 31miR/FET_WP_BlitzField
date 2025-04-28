@@ -4,11 +4,11 @@ The task is to make an app/game using WINAPI.
 
 # About the app
 This is a top down fighting game where you can jump and slash with your character. There are 4 levels in it, and you can
-finish all of them in about 15 minutes.
+finish all of them in about 15 minutes.\
 To control your character:
-W/A/S/D - move top/left/down/right
-SPACE - slash
-LEFT MOUSE CLICK - dash to cursor (or as close as possible).
+- W/A/S/D - move top/left/down/right
+- SPACE - slash
+- LEFT MOUSE CLICK - dash to cursor (or as close as possible).
 Every level you finish for the first time gives you a point that you can use to level up your character.
 
 # What's in this repository
@@ -21,5 +21,5 @@ The project code, that was written with a colleague, was not inside the git repo
 
 # How to build?
 Currently, the easiest way to build the project is by using some IDE. Codeblocks project file (.cbp) has been added to the repo so if you have codeblocks you can compile from there.
-However, you do need a database (game_data.db) and resources/ in order to for the app to work properly.
-game_data.db is already provided but you cannot clear it as the delete option for profiles is not implemented in game. Hence, if you wish to reset the scores, you will need to paste a new game_data.db over the original. You can find the clean .db file inside the clean_db_file directory.
+However, you do need a database (game_data.db) and resources/ in order for the app to work properly.\
+game_data.db is already provided but you cannot clear it as the delete option for profiles is not implemented in the game. Hence, if you wish to reset the scores, you will need to paste a new game_data.db over the original. You can find the clean .db file inside the clean_db_file directory.
