@@ -22,4 +22,4 @@ The project code, that was written with a colleague, was not inside the git repo
 # How to build?
 Currently, the easiest way to build the project is by using some IDE. Codeblocks project file (.cbp) has been added to the repo so if you have codeblocks you can compile from there.
 However, you do need a database (game_data.db) and resources/ in order to for the app to work properly.
-game_data.db is already provided but you cannot clear it as the delete option for profiles is not implemented in game. Hence, if you wish to reset the scores, you will need to paste a new game_data.db over the original.
+game_data.db is already provided but you cannot clear it as the delete option for profiles is not implemented in game. Hence, if you wish to reset the scores, you will need to paste a new game_data.db over the original. You can find the clean .db file inside the clean_db_file directory.
